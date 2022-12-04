@@ -1,6 +1,0 @@
-<%= form_with model: @search, url: user_searches_path, method: :post,  local: true, scope: :search,data: { turbo: false }  do |form| %>
-
-     <%= form.label :search_for_article %>
-     <%= form.text_field :searching_for, autofocus: true %>
-     <%= form.submit "Search" %>
-<% end %>

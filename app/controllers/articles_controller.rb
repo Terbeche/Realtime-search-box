@@ -1,5 +1,4 @@
 class ArticlesController < ApplicationController
-
   def index
     @articles = Article.search(params)
     @search = current_user.searches.new(searching_for: params[:query], user_id: current_user.id)
@@ -15,8 +14,6 @@ class ArticlesController < ApplicationController
       render :new
     end
   end
-
-
 
   # def index
   #   if params[:query].present?
