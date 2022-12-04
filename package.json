@@ -6,6 +6,8 @@
     "stylelint-scss": "^3.21.0"
   },
   "dependencies": {
-    "@rails/ujs": "^7.0.4"
+    "@rails/ujs": "^7.0.4",
+    "debounce": "^1.2.1",
+    "use-debounce": "^9.0.2"
   }
 }

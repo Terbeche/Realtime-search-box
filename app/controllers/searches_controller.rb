@@ -28,12 +28,10 @@ class SearchesController < ApplicationController
       @original_search.frequency += 1
       @original_search.save
       redirect_to users_path
+    elsif @search.save
+      redirect_to users_path
     else
-      if @search.save
-        redirect_to users_path
-      else
-        render :new
-      end
+      render :new
     end
   end
 
