@@ -24,7 +24,6 @@ export default class extends Controller {
   }
 
   submit(e) {
-    console.log(e.target.value);
     this.element.requestSubmit()
   }
 }

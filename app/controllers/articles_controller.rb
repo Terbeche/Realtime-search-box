@@ -3,48 +3,49 @@ class ArticlesController < ApplicationController
     @articles = Article.search(params)
     @search = current_user.searches.new(searching_for: params[:query], user_id: current_user.id)
 
+    if @search.searching_for
+      @search.searching_for = if @search.searching_for[0] == ' ' || @search.searching_for[-1] == ' '
+                                @search.searching_for.strip!
+                              else
+                                @search.searching_for
+                              end
+    end
+
+    return unless @search.searching_for and !@search.searching_for.empty?
+
     if Search.exists?(searching_for: @search.searching_for)
       @original_search = Search.find_by(searching_for: @search.searching_for)
       @original_search.frequency += 1
       @original_search.save
-      # redirect_to articles_path
-    elsif @search.save
-      # redirect_to articles_path
     else
-      render :new
+      @search.save
     end
   end
 
-  # def index
-  #   if params[:query].present?
-  #     @articles = Article.where("title LIKE ?", "%#{params[:query]}%")
-  #   else
-  #     @articles = Article.all
-  #   end
-
-  #   # Not too clean but it works!
-  #   if turbo_frame_request?
-  #     render partial: "articles", locals: { articles: @articles }
-  #   else
-  #     render :index
-  #   end
-  # end
-
-  # def index
-  #   @articles = Article.all
-  #   @articles = if params[:searching_for] && params[:searching_for] != ''
-  #                 @articles.where('title like ?',
-  #                                 '%# {params[:searching_for]}%')
-  #                 puts "find articles"
-  #                 puts @articles
-  #               else
-  #                 puts "no articles found"
-  #                 puts @articles
-  #                 @articles.all
-  #               end
-  # end
-
   def show
-    @article = Artice.find params[:id]
+    @article = Article.find params[:id]
+  end
+
+  def new
+    @article = Article.new
+    respond_to do |format|
+      format.html { render :new, locals: { article: @article } }
+    end
+  end
+
+  def article_params
+    params
+      .require(:article)
+      .permit(:title, :content)
+      .merge(user_id: params[:user_id])
+  end
+
+  def create
+    @article = current_user.articles.new(article_params)
+    if @article.save
+      redirect_to articles_path(@article.user_id, @article.id)
+    else
+      render :new
+    end
   end
 end
