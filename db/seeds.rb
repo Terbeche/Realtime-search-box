@@ -5,9 +5,16 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+User.destroy_all
+Article.destroy_all
+Search.destroy_all
 
-@first_artcile = Article.create(title: "First Article", content: "This is the first article")
-@second_artcile = Article.create(title: "Second Article", content: "This is the second article")
-@third_artcile = Article.create(title: "third Article", content: "This is the third article")
-@fourth_artcile = Article.create(title: "fourth Article", content: "This is the fourth article")
-@fifth_artcile = Article.create(title: "fifth Article", content: "This is the fifth article")
+@user1 = User.create(name:"user1", email:"user1@gmail.com", password:"123456", password_confirmation:"123456")
+p "Created #{User.count} users"
+
+@first_artcile = Article.create(title: "First Article", content: "This is the first article", user_id: @user1.id)
+@second_artcile = Article.create(title: "Second Article", content: "This is the second article", user_id: @user1.id)
+@third_artcile = Article.create(title: "third Article", content: "This is the third article", user_id: @user1.id)
+@fourth_artcile = Article.create(title: "fourth Article", content: "This is the fourth article", user_id: @user1.id)
+@fifth_artcile = Article.create(title: "fifth Article", content: "This is the fifth article", user_id: @user1.id)
+p "Created #{Article.count} articles"

@@ -1,8 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-// import debounce from "debounce"
-// import { useDebounce } from 'use-debounce';
 
-// Connects to data-controller="search"
 const  debounce = (func, wait) =>{
   let timeout;
 
