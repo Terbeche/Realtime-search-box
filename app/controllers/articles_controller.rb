@@ -2,7 +2,10 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.search(params)
     @search = current_user.searches.new(searching_for: params[:query], user_id: current_user.id)
+    optimize_search
+  end
 
+  def optimize_search
     if @search.searching_for
       @search.searching_for = if @search.searching_for[0] == ' ' || @search.searching_for[-1] == ' '
                                 @search.searching_for.strip!
