@@ -1,0 +1,7 @@
+<% @articles.each do |article| %>
+    <div id="<%= article %>">
+        <p class="text-lg leading-loose">
+        <%= link_to article.title, article_path(article), class: "text-blue-600 hover:text-orange-700" %>
+        </p>
+    </div>
+<% end %>
