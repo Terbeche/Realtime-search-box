@@ -16,4 +16,7 @@ class Article < ApplicationRecord
       )
     end
   end
+
+  validates :title, presence: true, length: { maximum: 250 }
+  validates :content, presence: true
 end
